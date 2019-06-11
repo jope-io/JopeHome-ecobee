@@ -56,7 +56,7 @@ class ECOBEE {
   async generatePIN(scope = CONSTANTS.SCOPE.WRITE) {
     // Check scope
     if (Object.values(CONSTANTS.SCOPE).indexOf(scope) === -1) {
-      throw new TypeError('Bad scope.');
+      throw new TypeError('invalid scope');
     }
 
     debug(`Generating PIN with scope ${scope}...`);
@@ -94,7 +94,7 @@ class ECOBEE {
    */
   async checkPINStatus(authCode) {
     if (typeof authCode !== 'string') {
-      throw new TypeError('bad authentication code format');
+      throw new TypeError('invalid authentication code');
     }
 
     debug(`Checking PIN for auth code ${authCode}...`);
@@ -145,15 +145,15 @@ class ECOBEE {
     const {authCode, interval = 1, maxAttempts = 100} = options;
 
     if (typeof authCode !== 'string') {
-      throw new TypeError('bad authentication code format');
+      throw new TypeError('invalid authentication code');
     }
 
     if (typeof interval !== 'number') {
-      throw new TypeError('bad interval format');
+      throw new TypeError('invalid interval');
     }
 
     if (typeof maxAttempts !== 'number') {
-      throw new TypeError('bad maxAttempts format');
+      throw new TypeError('invalid maxAttempts');
     }
 
     try {
@@ -189,7 +189,7 @@ class ECOBEE {
    */
   async refreshToken(refreshToken) {
     if (typeof refreshToken !== 'string') {
-      throw new TypeError('bad refreshToken format');
+      throw new TypeError('invalid refreshToken');
     }
 
     debug(`Refreshing access token with refresh token ${refreshToken}...`);
@@ -220,7 +220,7 @@ class ECOBEE {
    */
   setToken(token) {
     if (typeof token !== 'string') {
-      throw new TypeError('bad access token format');
+      throw new TypeError('invalid access token');
     }
 
     this.token = token;
@@ -246,7 +246,7 @@ class ECOBEE {
    */
   pollThermostatsRaw(selection) {
     if (typeof selection !== 'object') {
-      throw new TypeError('bad selection format');
+      throw new TypeError('invalid selection');
     }
 
     return this.sendRequest({
@@ -277,7 +277,7 @@ class ECOBEE {
    */
   async pollThermostats(selection) {
     if (typeof selection !== 'object') {
-      throw new TypeError('bad selection format');
+      throw new TypeError('invalid selection');
     }
 
     const res = await this.pollThermostatsRaw(selection);
@@ -327,11 +327,11 @@ class ECOBEE {
    */
   getThermostatsRaw({selection, page} = {}) {
     if (typeof selection !== 'object') {
-      throw new TypeError('bad selection format');
+      throw new TypeError('invalid selection');
     }
 
     if (page && typeof page !== 'number') {
-      throw new TypeError('bad page format');
+      throw new TypeError('invalid page');
     }
 
     return this.sendRequest({
@@ -403,15 +403,15 @@ class ECOBEE {
    */
   updateThermostatsRaw({selection, settings = {}, functions = []}) {
     if (typeof selection !== 'object') {
-      throw new TypeError('bad selection format');
+      throw new TypeError('invalid selection');
     }
 
     if (typeof settings !== 'object') {
-      throw new TypeError('bad settings format');
+      throw new TypeError('invalid settings');
     }
 
     if (functions.constructor !== Array) {
-      throw new TypeError('bad functions format');
+      throw new TypeError('invalid functions');
     }
 
     return this.sendRequest({
