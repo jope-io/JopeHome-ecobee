@@ -15,7 +15,7 @@ const debug = require('debug')('@jope:ecobee');
 * @class
 */
 class ECOBEE {
-  constructor({key, token, url = 'https://api.ecobee.com/', version = 1}) {
+  constructor({key, token, url = 'https://api.ecobee.com/', version = 1} = {}) {
     if (typeof key !== 'string') {
       throw new TypeError('invalid API key');
     }
@@ -93,6 +93,10 @@ class ECOBEE {
    * const token = await ecobee.checkPINStatus('example-auth-code');
    */
   async checkPINStatus(authCode) {
+    if (typeof authCode !== 'string') {
+      throw new TypeError('bad authentication code format');
+    }
+
     debug(`Checking PIN for auth code ${authCode}...`);
 
     try {
@@ -137,8 +141,20 @@ class ECOBEE {
    *
    * console.log(token);
    */
-  async waitForPIN(options, attempts = 0) {
+  async waitForPIN(options = {}, attempts = 0) {
     const {authCode, interval = 1, maxAttempts = 100} = options;
+
+    if (typeof authCode !== 'string') {
+      throw new TypeError('bad authentication code format');
+    }
+
+    if (typeof interval !== 'number') {
+      throw new TypeError('bad interval format');
+    }
+
+    if (typeof maxAttempts !== 'number') {
+      throw new TypeError('bad maxAttempts format');
+    }
 
     try {
       debug('Checking PIN...');
@@ -172,6 +188,10 @@ class ECOBEE {
    * const newToken = await ecobee.refreshToken('example-refresh-token');
    */
   async refreshToken(refreshToken) {
+    if (typeof refreshToken !== 'string') {
+      throw new TypeError('bad refreshToken format');
+    }
+
     debug(`Refreshing access token with refresh token ${refreshToken}...`);
 
     try {
@@ -199,6 +219,10 @@ class ECOBEE {
    * @param {String} token access token
    */
   setToken(token) {
+    if (typeof token !== 'string') {
+      throw new TypeError('bad access token format');
+    }
+
     this.token = token;
   }
 
@@ -221,6 +245,10 @@ class ECOBEE {
    * console.log(revisions);
    */
   pollThermostatsRaw(selection) {
+    if (typeof selection !== 'object') {
+      throw new TypeError('bad selection format');
+    }
+
     return this.sendRequest({
       method: 'thermostatSummary',
       query: {
@@ -248,6 +276,10 @@ class ECOBEE {
    * console.log(revisions);
    */
   async pollThermostats(selection) {
+    if (typeof selection !== 'object') {
+      throw new TypeError('bad selection format');
+    }
+
     const res = await this.pollThermostatsRaw(selection);
 
     const thermostats = res.revisionList.reduce((accumulator, thermostat) => {
@@ -293,7 +325,15 @@ class ECOBEE {
    *
    * console.log(thermostats);
    */
-  getThermostatsRaw({selection, page}) {
+  getThermostatsRaw({selection, page} = {}) {
+    if (typeof selection !== 'object') {
+      throw new TypeError('bad selection format');
+    }
+
+    if (page && typeof page !== 'number') {
+      throw new TypeError('bad page format');
+    }
+
     return this.sendRequest({
       method: 'thermostat',
       query: {
@@ -349,10 +389,10 @@ class ECOBEE {
    * @returns {Object}
    *
    * @example
-   * const update = await ecobee.updateThermostats({
+   * const update = await ecobee.updateThermostatsRaw({
    *   selection: {
    *     selectionType: 'thermostats',
-   *     selectionMatch: '411982499432'
+   *     selectionMatch: '101010101010'
    *   },
    *   settings: {
    *     hvacMode: 'off'
@@ -361,7 +401,19 @@ class ECOBEE {
    *
    * console.log(update);
    */
-  updateThermostats({selection, settings = {}, functions = []}) {
+  updateThermostatsRaw({selection, settings = {}, functions = []}) {
+    if (typeof selection !== 'object') {
+      throw new TypeError('bad selection format');
+    }
+
+    if (typeof settings !== 'object') {
+      throw new TypeError('bad settings format');
+    }
+
+    if (functions.constructor !== Array) {
+      throw new TypeError('bad functions format');
+    }
+
     return this.sendRequest({
       method: 'thermostat',
       data: {
@@ -373,21 +425,22 @@ class ECOBEE {
   }
 
   /**
-   * Updates a single thermostat's properties.
-   * Helper function that calls `updateThermostats()`.
+   * Update properties of thermostat(s).
+   * Helper function that wraps `updateThermostatsRaw()`
+   * to easily update properties by thermostat identifiers.
    * @param {Object} options
-   * @param {String} options.identifier
-   * thermostat identifier to select
+   * @param {Array} options.identifiers
+   * thermostat identifiers to select
    * @param {Object} [options.settings={}]
-   * settings to update the thermostat with
+   * settings to update the thermostat(s) with
    * (named the `thermostat` property in the ecobee docs)
    * @param {Array} [options.functions=[]]
    * special functions to apply
    * @returns {Object}
    *
    * @example
-   * const update = await ecobee.updateThermostat({
-   *   identifier: '101010101010',
+   * const update = await ecobee.updateThermostats({
+   *   identifiers: ['101010101010'],
    *   settings: {
    *     hvacMode: 'off'
    *   }
@@ -395,11 +448,11 @@ class ECOBEE {
    *
    * console.log(update);
    */
-  updateThermostat({identifier, settings = {}, functions = []}) {
-    return this.updateThermostats({
+  updateThermostats({identifiers, settings = {}, functions = []}) {
+    return this.updateThermostatsRaw({
       selection: {
         selectionType: 'thermostats',
-        selectionMatch: identifier
+        selectionMatch: identifiers.join(',')
       },
       settings,
       functions

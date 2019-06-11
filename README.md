@@ -70,10 +70,10 @@ const ecobee = new ECOBEE({
     -   [getThermostats](#getthermostats)
         -   [Parameters](#parameters-9)
         -   [Examples](#examples-8)
-    -   [updateThermostats](#updatethermostats)
+    -   [updateThermostatsRaw](#updatethermostatsraw)
         -   [Parameters](#parameters-10)
         -   [Examples](#examples-9)
-    -   [updateThermostat](#updatethermostat)
+    -   [updateThermostats](#updatethermostats)
         -   [Parameters](#parameters-11)
         -   [Examples](#examples-10)
 
@@ -83,7 +83,7 @@ The ecobee class.
 
 #### Parameters
 
--   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
     -   `options.key` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** API key
     -   `options.token` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** OAuth access token
     -   `options.url` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** base URL to use for requests (optional, default `'https://api.ecobee.com/'`)
@@ -137,7 +137,7 @@ a PIN and waiting for a user to add it.
 
 ##### Parameters
 
--   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
     -   `options.authCode` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** authentication code from the generated PIN
     -   `options.interval` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** interval, in seconds, to wait between polls (optional, default `1`)
     -   `options.maxAttempts` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** maximum number of polls to make before throwing an error (optional, default `100`)
@@ -241,7 +241,7 @@ For most cases, you'll want to use
 
 ##### Parameters
 
--   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
     -   `options.selection` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** ecobee [Selection](https://www.ecobee.com/home/developer/api/documentation/v1/objects/Selection.shtml) object
     -   `options.page` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** page number of results to return
 
@@ -291,7 +291,7 @@ console.log(thermostats);
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
-#### updateThermostats
+#### updateThermostatsRaw
 
 Updates properties of thermostat(s).
 
@@ -306,10 +306,10 @@ Updates properties of thermostat(s).
 ##### Examples
 
 ```javascript
-const update = await ecobee.updateThermostats({
+const update = await ecobee.updateThermostatsRaw({
   selection: {
     selectionType: 'thermostats',
-    selectionMatch: '411982499432'
+    selectionMatch: '101010101010'
   },
   settings: {
     hvacMode: 'off'
@@ -321,24 +321,25 @@ console.log(update);
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
-#### updateThermostat
+#### updateThermostats
 
-Updates a single thermostat's properties.
-Helper function that calls `updateThermostats()`.
+Update properties of thermostat(s).
+Helper function that wraps `updateThermostatsRaw()`
+to easily update properties by thermostat identifiers.
 
 ##### Parameters
 
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-    -   `options.identifier` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** thermostat identifier to select
-    -   `options.settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** settings to update the thermostat with
+    -   `options.identifiers` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** thermostat identifiers to select
+    -   `options.settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** settings to update the thermostat(s) with
         (named the `thermostat` property in the ecobee docs) (optional, default `{}`)
     -   `options.functions` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** special functions to apply (optional, default `[]`)
 
 ##### Examples
 
 ```javascript
-const update = await ecobee.updateThermostat({
-  identifier: '101010101010',
+const update = await ecobee.updateThermostats({
+  identifiers: ['101010101010'],
   settings: {
     hvacMode: 'off'
   }
