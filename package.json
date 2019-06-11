@@ -4,7 +4,10 @@
   "description": "🐝 a library for interacting with ecobee devices",
   "main": "index.js",
   "scripts": {
-    "test": "npx xo --quiet",
+    "test": "npx xo --quiet && npx ava",
+    "tdd": "npx ava --watch",
+    "coverage": "nyc npx ava",
+    "coverage-html": "nyc -r html npx ava && open ./coverage/index.html",
     "lint": "npx xo",
     "lint-fix": "npx xo --fix",
     "document": "npx documentation readme index.js -f md --section=Docs"
@@ -22,6 +25,11 @@
       "pre-commit": "npm test"
     }
   },
+  "ava": {
+    "helpers": [
+      "**/helpers/**/*"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jope-io/JopeHome-ecobee.git"
@@ -36,6 +44,8 @@
     "ava": "^2.1.0",
     "documentation": "^11.0.0",
     "husky": "^2.4.0",
+    "nock": "^10.0.6",
+    "nyc": "^14.1.1",
     "xo": "^0.24.0"
   },
   "dependencies": {

@@ -276,10 +276,6 @@ class ECOBEE {
    * console.log(revisions);
    */
   async pollThermostats(selection) {
-    if (typeof selection !== 'object') {
-      throw new TypeError('invalid selection');
-    }
-
     const res = await this.pollThermostatsRaw(selection);
 
     const thermostats = res.revisionList.reduce((accumulator, thermostat) => {
@@ -366,7 +362,7 @@ class ECOBEE {
    *
    * console.log(thermostats);
    */
-  async getThermostats({selection, page}) {
+  async getThermostats({selection, page} = {}) {
     const res = await this.getThermostatsRaw({selection, page});
 
     const thermostats = res.thermostatList.reduce((accumulator, thermostat) => {
@@ -401,7 +397,7 @@ class ECOBEE {
    *
    * console.log(update);
    */
-  updateThermostatsRaw({selection, settings = {}, functions = []}) {
+  updateThermostatsRaw({selection, settings = {}, functions = []} = {}) {
     if (typeof selection !== 'object') {
       throw new TypeError('invalid selection');
     }
@@ -448,11 +444,11 @@ class ECOBEE {
    *
    * console.log(update);
    */
-  updateThermostats({identifiers, settings = {}, functions = []}) {
+  updateThermostats({identifiers, settings = {}, functions = []} = {}) {
     return this.updateThermostatsRaw({
       selection: {
         selectionType: 'thermostats',
-        selectionMatch: identifiers.join(',')
+        selectionMatch: (identifiers ? identifiers.join(',') : '')
       },
       settings,
       functions
