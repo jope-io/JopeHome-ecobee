@@ -1,0 +1,46 @@
+{
+  "name": "@jope/ecobee",
+  "version": "0.1.0",
+  "description": "🐝 a library for interacting with ecobee devices",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx xo --quiet",
+    "lint": "npx xo",
+    "lint-fix": "npx xo --fix",
+    "document": "npx documentation readme index.js -f md --section=Docs"
+  },
+  "xo": {
+    "space": true,
+    "rules": {
+      "camelcase": [
+        "off"
+      ]
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jope-io/JopeHome-ecobee.git"
+  },
+  "author": "Max Isom <codetheweb@icloud.com> (https://maxisom.me)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jope-io/JopeHome-ecobee/issues"
+  },
+  "homepage": "https://github.com/jope-io/JopeHome-ecobee#readme",
+  "devDependencies": {
+    "ava": "^2.1.0",
+    "documentation": "^11.0.0",
+    "husky": "^2.4.0",
+    "xo": "^0.24.0"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "delay": "^4.2.0",
+    "got": "^9.6.0"
+  }
+}
