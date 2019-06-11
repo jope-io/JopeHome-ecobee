@@ -20,7 +20,7 @@ class ECOBEE {
       throw new TypeError('invalid API key');
     }
 
-    if (typeof token !== 'string') {
+    if (typeof token !== 'undefined' && typeof token !== 'string') {
       throw new TypeError('invalid access token');
     }
 
@@ -135,7 +135,7 @@ class ECOBEE {
    *
    * const token = await ecobee.waitForPIN({authCode: pin.code});
    *
-   * console.log(token)
+   * console.log(token);
    */
   async waitForPIN(options, attempts = 0) {
     const {authCode, interval = 1, maxAttempts = 100} = options;
@@ -467,4 +467,4 @@ const CONSTANTS = {
   }
 };
 
-module.exports = {ECOBEE, CONSTANTS};
+module.exports = {ECOBEE, ECOBEE_CONSTANTS: CONSTANTS};

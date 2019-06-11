@@ -1,6 +1,39 @@
-# JopeHome-ecobee
+# @jope/ecobee
 
-Library for interacting with ecobee devices
+A Nodejs wrapper for the [ecobee API](https://www.ecobee.com/home/developer/api/introduction/index.shtml).
+
+## Quickstart
+
+```javascript
+const {ECOBEE, ECOBEE_CONSTANTS} = require('@jope/ecobee');
+
+const ecobee = new ECOBEE({
+  key: 'example-key'
+});
+
+(async () => {
+  // Generate application PIN
+  const pin = await ecobee.generatePIN(ECOBEE_CONSTANTS.SCOPE.WRITE);
+
+  console.log('Generated PIN:', pin); // => add to your applications on your account
+
+  // Poll and wait for PIN to be added
+  // (returned access token is automatically saved in class instance)
+  const token = await ecobee.waitForPIN({authCode: pin.code});
+
+  console.log('Generated token:', token); // => generated OAuth token (save the refresh token somewhere)
+
+  const thermostats = await ecobee.getThermostats({
+    selection: {
+      registered: true,
+      selectionType: 'registered',
+      includeSettings: true
+    }
+  });
+
+  console.log(thermostats); // => thermostats associated with user's account
+})();
+```
 
 ## Docs
 
@@ -119,7 +152,7 @@ console.log(pin); // => add to your applications
 
 const token = await ecobee.waitForPIN({authCode: pin.code});
 
-console.log(token)
+console.log(token);
 ```
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** OAuth token object
