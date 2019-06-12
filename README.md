@@ -1,11 +1,11 @@
-# @jope/ecobee
+# @jope-io/ecobee
 
 A Nodejs wrapper for the [ecobee API](https://www.ecobee.com/home/developer/api/introduction/index.shtml).
 
 ## Quickstart
 
 ```javascript
-const {ECOBEE, ECOBEE_CONSTANTS} = require('@jope/ecobee');
+const {ECOBEE, ECOBEE_CONSTANTS} = require('@jope-io/ecobee');
 
 const ecobee = new ECOBEE({
   key: 'example-key'
