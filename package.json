@@ -1,5 +1,5 @@
 {
-  "name": "@jope/ecobee",
+  "name": "@jope-io/ecobee",
   "version": "0.1.0",
   "description": "🐝 a library for interacting with ecobee devices",
   "main": "index.js",
@@ -34,6 +34,18 @@
     "type": "git",
     "url": "git+https://github.com/jope-io/JopeHome-ecobee.git"
   },
+  "keywords": [
+    "🐝 ",
+    "ecobee",
+    "thermostat",
+    "smart",
+    "house",
+    "home",
+    "hvac",
+    "air conditioning",
+    "API",
+    "controller"
+  ],
   "author": "Max Isom <codetheweb@icloud.com> (https://maxisom.me)",
   "license": "ISC",
   "bugs": {
