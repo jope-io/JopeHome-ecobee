@@ -53,18 +53,17 @@ test('check PIN status validation', async t => {
 });
 
 test('wait for PIN validation', async t => {
-  const invalidAuthCode = await t.throwsAsync(() => eb.waitForPIN({}));
+  const invalidAuthCode = await t.throwsAsync(() => eb.waitForPIN());
 
   t.is(invalidAuthCode.message, 'invalid authentication code');
 
-  const invalidInterval = await t.throwsAsync(() => eb.waitForPIN({
-    authCode: 'example-auth-code',
+  const invalidInterval = await t.throwsAsync(() => eb.waitForPIN('example-auth-code', {
     interval: '5s'
   }));
 
   t.is(invalidInterval.message, 'invalid interval');
 
-  const invalidMaxAttempts = await t.throwsAsync(() => eb.waitForPIN({
+  const invalidMaxAttempts = await t.throwsAsync(() => eb.waitForPIN('example-auth-code', {
     authCode: 'example-auth-code',
     maxAttempts: '100'
   }));

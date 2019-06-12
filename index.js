@@ -122,9 +122,9 @@ class ECOBEE {
    * Recursive helper function that polls
    * `checkPINStatus()`. Use after generating
    * a PIN and waiting for a user to add it.
-   * @param {Object} options
-   * @param {String} options.authCode
+   * @param {String} authCode
    * authentication code from the generated PIN
+   * @param {Object} options
    * @param {Number} [options.interval=1]
    * interval, in seconds, to wait between polls
    * @param {Number} [options.maxAttempts=100]
@@ -141,8 +141,8 @@ class ECOBEE {
    *
    * console.log(token);
    */
-  async waitForPIN(options = {}, attempts = 0) {
-    const {authCode, interval = 1, maxAttempts = 100} = options;
+  async waitForPIN(authCode, options = {}, attempts = 0) {
+    const {interval = 1, maxAttempts = 100} = options;
 
     if (typeof authCode !== 'string') {
       throw new TypeError('invalid authentication code');
@@ -172,7 +172,7 @@ class ECOBEE {
 
         await delay(interval * 1000);
 
-        return this.waitForPIN(options, ++attempts);
+        return this.waitForPIN(authCode, options, ++attempts);
       }
 
       throw error;
@@ -369,7 +369,7 @@ class ECOBEE {
       return {...accumulator, [thermostat.identifier]: thermostat};
     }, {});
 
-    return thermostats;
+    return {page: res.page, status: res.status, thermostats};
   }
 
   /**

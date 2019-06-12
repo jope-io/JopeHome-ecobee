@@ -137,8 +137,8 @@ a PIN and waiting for a user to add it.
 
 ##### Parameters
 
+-   `authCode` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** authentication code from the generated PIN
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
-    -   `options.authCode` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** authentication code from the generated PIN
     -   `options.interval` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** interval, in seconds, to wait between polls (optional, default `1`)
     -   `options.maxAttempts` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** maximum number of polls to make before throwing an error (optional, default `100`)
 -   `attempts` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** (for internal use, do not use) (optional, default `0`)
@@ -271,7 +271,7 @@ identifiers.
 
 ##### Parameters
 
--   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
     -   `options.selection` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** ecobee [Selection](https://www.ecobee.com/home/developer/api/documentation/v1/objects/Selection.shtml) object
     -   `options.page` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** page number of results to return
 
@@ -297,7 +297,7 @@ Updates properties of thermostat(s).
 
 ##### Parameters
 
--   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
     -   `options.selection` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** ecobee [Selection](https://www.ecobee.com/home/developer/api/documentation/v1/objects/Selection.shtml) object
     -   `options.settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** settings to update the thermostat with
         (named the `thermostat` property in the ecobee docs) (optional, default `{}`)
@@ -329,7 +329,7 @@ to easily update properties by thermostat identifiers.
 
 ##### Parameters
 
--   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
     -   `options.identifiers` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** thermostat identifiers to select
     -   `options.settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** settings to update the thermostat(s) with
         (named the `thermostat` property in the ecobee docs) (optional, default `{}`)
