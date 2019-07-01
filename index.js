@@ -119,6 +119,50 @@ class ECOBEE {
   }
 
   /**
+   * Gets token by an authorization code.
+   *
+   * @param {String} authCode
+   * authorization code
+   * @param {String} redirectURI
+   * the redirect URI of your token grant flow
+   * @returns {Object} OAuth token object
+   *
+   * @example
+   * const token = await ecobee.getTokenByCode('example-auth-code');
+   */
+  async getTokenByCode(authCode, redirectURI) {
+    if (typeof authCode !== 'string') {
+      throw new TypeError('invalid authentication code');
+    }
+
+    if (typeof redirectURI !== 'string') {
+      throw new TypeError('invalid redirect URI');
+    }
+
+    debug(`Getting token for auth code ${authCode}...`);
+
+    try {
+      const res = await this.client.post('token', {
+        query: {
+          code: authCode,
+          client_id: this.key,
+          grant_type: 'authorization_code',
+          redirect_uri: redirectURI
+        }
+      });
+
+      return res.body;
+    } catch (error) {
+      console.log(error);
+      if (error.body && error.body.error_description) {
+        throw new Error(error.body.error_description);
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  /**
    * Recursive helper function that polls
    * `checkPINStatus()`. Use after generating
    * a PIN and waiting for a user to add it.

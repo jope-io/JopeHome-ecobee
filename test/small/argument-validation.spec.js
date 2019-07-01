@@ -71,6 +71,12 @@ test('wait for PIN validation', async t => {
   t.is(invalidMaxAttempts.message, 'invalid maxAttempts');
 });
 
+test('get token by code validation', async t => {
+  const invalidAuthCode = await t.throwsAsync(() => eb.getTokenByCode());
+
+  t.is(invalidAuthCode.message, 'invalid authentication code');
+});
+
 test('refresh token validation', async t => {
   const invalidRefreshToken = await t.throwsAsync(() => eb.refreshToken());
 

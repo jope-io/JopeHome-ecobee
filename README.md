@@ -50,32 +50,35 @@ const ecobee = new ECOBEE({
     -   [checkPINStatus](#checkpinstatus)
         -   [Parameters](#parameters-2)
         -   [Examples](#examples-2)
-    -   [waitForPIN](#waitforpin)
+    -   [getTokenByCode](#gettokenbycode)
         -   [Parameters](#parameters-3)
         -   [Examples](#examples-3)
-    -   [refreshToken](#refreshtoken)
+    -   [waitForPIN](#waitforpin)
         -   [Parameters](#parameters-4)
         -   [Examples](#examples-4)
-    -   [setToken](#settoken)
+    -   [refreshToken](#refreshtoken)
         -   [Parameters](#parameters-5)
-    -   [pollThermostatsRaw](#pollthermostatsraw)
-        -   [Parameters](#parameters-6)
         -   [Examples](#examples-5)
-    -   [pollThermostats](#pollthermostats)
+    -   [setToken](#settoken)
+        -   [Parameters](#parameters-6)
+    -   [pollThermostatsRaw](#pollthermostatsraw)
         -   [Parameters](#parameters-7)
         -   [Examples](#examples-6)
-    -   [getThermostatsRaw](#getthermostatsraw)
+    -   [pollThermostats](#pollthermostats)
         -   [Parameters](#parameters-8)
         -   [Examples](#examples-7)
-    -   [getThermostats](#getthermostats)
+    -   [getThermostatsRaw](#getthermostatsraw)
         -   [Parameters](#parameters-9)
         -   [Examples](#examples-8)
-    -   [updateThermostatsRaw](#updatethermostatsraw)
+    -   [getThermostats](#getthermostats)
         -   [Parameters](#parameters-10)
         -   [Examples](#examples-9)
-    -   [updateThermostats](#updatethermostats)
+    -   [updateThermostatsRaw](#updatethermostatsraw)
         -   [Parameters](#parameters-11)
         -   [Examples](#examples-10)
+    -   [updateThermostats](#updatethermostats)
+        -   [Parameters](#parameters-12)
+        -   [Examples](#examples-11)
 
 ### ECOBEE
 
@@ -125,6 +128,23 @@ if the PIN has not been added.
 
 ```javascript
 const token = await ecobee.checkPINStatus('example-auth-code');
+```
+
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** OAuth token object
+
+#### getTokenByCode
+
+Gets token by an authorization code.
+
+##### Parameters
+
+-   `authCode` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** authorization code
+-   `redirectURI` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the redirect URI of your token grant flow
+
+##### Examples
+
+```javascript
+const token = await ecobee.getTokenByCode('example-auth-code');
 ```
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** OAuth token object

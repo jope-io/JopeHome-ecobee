@@ -71,6 +71,22 @@ test('wait for PIN', async t => {
   t.deepEqual(token, generatedToken);
 });
 
+test('get token with auth code', async t => {
+  nock(URL)
+    .post('/token')
+    .query({
+      code: 'example-auth-code',
+      client_id: API_KEY,
+      grant_type: 'authorization_code',
+      redirect_uri: 'http://auth.me'
+    })
+    .reply(200, generatedToken);
+
+  const token = await eb.getTokenByCode('example-auth-code', 'http://auth.me');
+
+  t.deepEqual(token, generatedToken);
+});
+
 test('refresh token', async t => {
   nock(URL)
     .post('/token')
