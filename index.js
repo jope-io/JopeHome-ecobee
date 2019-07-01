@@ -153,7 +153,6 @@ class ECOBEE {
 
       return res.body;
     } catch (error) {
-      console.log(error);
       if (error.body && error.body.error_description) {
         throw new Error(error.body.error_description);
       } else {
