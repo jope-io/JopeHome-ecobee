@@ -1,0 +1,19 @@
+version: v1.0
+name: JopeHome-ecobee
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Build
+    task:
+      secrets:
+        - name: global-variables
+        - name: jopehome-ecobee
+      jobs:
+        - name: Lint and test
+          commands:
+            - checkout
+            - npm i
+            - npm run lint
+            - npm run test-with-coverage
