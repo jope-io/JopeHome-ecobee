@@ -1,5 +1,7 @@
 # @jope-io/ecobee
 
+[![Build Status](https://semaphoreci.com/api/v1/jope/jopehome-ecobee/branches/master/badge.svg)](https://semaphoreci.com/jope/jopehome-ecobee)
+
 A Nodejs wrapper for the [ecobee API](https://www.ecobee.com/home/developer/api/introduction/index.shtml).
 
 ## Quickstart
